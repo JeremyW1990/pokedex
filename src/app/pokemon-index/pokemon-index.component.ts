@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { PokemonDataService } from '../services/pokemon-data.service';
+import { Pokemon } from './pokemon.module';
 
 @Component({
   selector: 'app-pokemon-index',
@@ -7,9 +9,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PokemonIndexComponent implements OnInit {
 
-  constructor() { }
+  private pokemonList: Pokemon[];
+
+  constructor(private pokemonDataService: PokemonDataService) { }
 
   ngOnInit() {
+    this.pokemonList = this.pokemonDataService.getPokemonDatabase();
   }
 
 }
