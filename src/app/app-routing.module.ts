@@ -7,12 +7,9 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'index', component: PokemonIndexComponent,
-    children: [
-      {path: ':id', component: PokemonDetailComponent},
-      {path: ':id/edit', component: PokemonEditComponent}
-    ]
-  }
+  { path: 'index', component: PokemonIndexComponent },
+  { path: ':id', component: PokemonDetailComponent},
+  { path: ':id/edit', component: PokemonEditComponent}
 ];
 
 @NgModule({

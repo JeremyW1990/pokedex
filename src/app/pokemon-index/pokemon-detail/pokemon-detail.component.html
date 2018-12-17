@@ -1,5 +1,22 @@
-<p>
-  pokemon-detail works!
-</p>
+<div class="row">
+  <h1>{{pokemon.name}} #{{pokemon.id}}</h1>
 
-<router-outlet></router-outlet>
+  <div class='col-md-6'>
+    <img  [src]="pokemon.imagePath" alt={{pokemon.name}}>
+  </div>
+
+  <div class='col-md-6'>
+    <p>
+      {{pokemon.description}}...
+    </p>
+  </div>
+
+  <mat-card-actions>
+    <button mat-button>LIKE</button>
+    <button mat-button>SHARE</button>
+  </mat-card-actions>
+
+</div>
+
+
+
