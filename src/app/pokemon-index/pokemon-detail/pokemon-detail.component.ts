@@ -11,7 +11,7 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 
 export class PokemonDetailComponent implements OnInit {
 
-  private pokemon;
+  public pokemon;
   private id: number;
 
   constructor(
@@ -23,8 +23,16 @@ export class PokemonDetailComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.pokemon = this.pokemonDataService.getPokemonById(this.id);
-      console.log(this.pokemon);
     });
+  }
+
+  onEdit () {
+    this.router.navigate([this.id + '/edit']);
+  }
+
+  onDelete () {
+    this.pokemonDataService.deletePokemonById(this.id);
+    this.router.navigate(['/index']);
   }
 
 }

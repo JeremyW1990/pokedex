@@ -8,8 +8,9 @@ import { HomeComponent } from './home/home.component';
 const routes: Routes = [
   { path: '', component: HomeComponent},
   { path: 'index', component: PokemonIndexComponent },
+  { path: 'new', component: PokemonEditComponent},
   { path: ':id', component: PokemonDetailComponent},
-  { path: ':id/edit', component: PokemonEditComponent}
+  { path: ':id/edit', component: PokemonEditComponent},
 ];
 
 @NgModule({
