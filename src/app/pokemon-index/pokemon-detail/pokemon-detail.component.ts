@@ -22,7 +22,10 @@ export class PokemonDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.pokemon = this.pokemonDataService.getPokemonById(this.id);
+      this.pokemonDataService.getPokemonById(this.id)
+        .subscribe(response => {
+          this.pokemon = response.pokemon;
+        });
       console.log(this.pokemon);
     });
   }

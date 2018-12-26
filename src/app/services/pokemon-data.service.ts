@@ -27,12 +27,9 @@ export class PokemonDataService {
   }
 
   getPokemonById (id: number) {
-    for (const v of this.pokemons) {
-      if (+v.id === +id) {
-        return v;
-      }
-    }
+    return this.http.get('http://localhost:3000/' + id);
   }
+
   deletePokemonById(id: number): any {
     const updatepokemons = this.pokemons.filter(pokemon => +pokemon.id !== +id);
     this.pokemons = updatepokemons;

@@ -1,7 +1,6 @@
 const Pokemon = require('../models/pokemon');
 
-exports.getPokemons = (req, res, next)=>{
-
+exports.getPokemons = (req, res, next) => {
 
   const pokemonQuery = Pokemon.find();
   let pokemons;
@@ -20,10 +19,26 @@ exports.getPokemons = (req, res, next)=>{
       })
     })
     .catch(err=>{
-
       console.log(err);
       res.status(500).json({
         message: 'Pokemons fetch failed.'
       })
     });
 };
+
+exports.getPokemon = (req, res, next) => {
+  Pokemon.findOne({id: req.params.id })
+  .then(response => {
+    console.log('Pokemon fetched by ID successfully!', response);
+    res.json({
+      message: 'Pokemon fetched by ID successfully!',
+      pokemon: response
+    })
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({
+      message: 'Pokemon fetch by ID failed.'
+    })
+  })
+}
