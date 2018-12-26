@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 export class PokemonDataService {
 
   private pokemons: Pokemon[] = [];
+  private totalPokemonsNumber = 0;
   private pokemonListener = new Subject();
 
   constructor(private http: HttpClient) { }
@@ -22,8 +23,10 @@ export class PokemonDataService {
         for (const v of response.pokemons) {
           const pokemon = new Pokemon(v.id, v.name, v.description, v.imagePath);
           this.pokemons.push(pokemon);
+          this.totalPokemonsNumber = response.totalPokemonsNumber;
+
         }
-        this.pokemonListener.next(this.pokemons);
+        this.pokemonListener.next({pokemons: this.pokemons, totalPokemonsNumber: this.totalPokemonsNumber});
       });
   }
 

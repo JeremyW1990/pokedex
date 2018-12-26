@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 export class PokemonIndexComponent implements OnInit {
 
   private pokemons;
+  private totalPokemonsNumber;
   private pokemonsSubscription: Subscription;
 
   constructor(private pokemonDataService: PokemonDataService) { }
@@ -19,7 +20,8 @@ export class PokemonIndexComponent implements OnInit {
     this.pokemonDataService.getpokemons();
     this.pokemonsSubscription = this.pokemonDataService.getPokemonListener()
       .subscribe(response => {
-        this.pokemons = response;
+        this.pokemons = response.pokemons;
+        this.totalPokemonsNumber = response.totalPokemonsNumber;
         console.log(this.pokemons);
       });
   }
