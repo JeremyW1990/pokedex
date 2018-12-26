@@ -20,12 +20,8 @@ export class PokemonDataService {
   getpokemons () {
     this.http.get('http://localhost:3000/index')
       .subscribe(response => {
-        for (const v of response.pokemons) {
-          const pokemon = new Pokemon(v.id, v.name, v.description, v.imagePath);
-          this.pokemons.push(pokemon);
-          this.totalPokemonsNumber = response.totalPokemonsNumber;
-
-        }
+        this.pokemons = response.pokemons;
+        this.totalPokemonsNumber = response.totalPokemonsNumber;
         this.pokemonListener.next({pokemons: this.pokemons, totalPokemonsNumber: this.totalPokemonsNumber});
       });
   }
