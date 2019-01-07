@@ -19,7 +19,7 @@ export class PokemonIndexComponent implements OnInit {
   ngOnInit() {
     this.pokemonDataService.getpokemons();
     this.pokemonsSubscription = this.pokemonDataService.getPokemonListener()
-      .subscribe(response => {
+      .subscribe((response: {pokemons: any, totalPokemonsNumber: number }) => {
         this.pokemons = response.pokemons;
         this.totalPokemonsNumber = response.totalPokemonsNumber;
         console.log(this.pokemons);

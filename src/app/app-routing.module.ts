@@ -7,14 +7,14 @@ import { HomeComponent } from './home/home.component';
 
 const routes: Routes = [
   { path: '', component: HomeComponent},
-  { path: 'index', component: PokemonIndexComponent },
+  { path: 'pokemons', component: PokemonIndexComponent },
   { path: 'new', component: PokemonEditComponent},
-  { path: ':id', component: PokemonDetailComponent},
-  { path: ':id/edit', component: PokemonEditComponent},
+  { path: 'pokemons/:id', component: PokemonDetailComponent},
+  { path: 'pokemons/:id/edit', component: PokemonEditComponent},
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'} )],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

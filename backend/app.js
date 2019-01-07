@@ -62,6 +62,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(pokemonRoutes);
+app.use('/pokemons', pokemonRoutes);
 
 module.exports = app;

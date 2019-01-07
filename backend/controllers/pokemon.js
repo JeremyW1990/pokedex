@@ -40,5 +40,28 @@ exports.getPokemon = (req, res, next) => {
     res.status(500).json({
       message: 'Pokemon fetch by ID failed.'
     })
+  });
+};
+
+exports.createPokemon = (req, res, next) => {
+  console.log('create Pokemon' , req.body);
+  const pokemon = new Pokemon({
+    id: req.body.id,
+    name: req.body.name,
+    imagePath: req.body.imagePath,
+    description: req.body.description
+  });
+  pokemon.save()
+  .then(response => {
+    res.json({
+      message: 'Pokemon added successfully!'
+    })
   })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({
+      message: 'Pokemon added failed.'
+    })
+  });
 }
+

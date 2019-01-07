@@ -40,7 +40,7 @@ export class PokemonEditComponent implements OnInit {
     } else {
       this.pokemonDataService.addNewPokemon(this.pokemonForm.value);
     }
-    this.router.navigate([this.pokemonForm.value.id]);
+    this.router.navigate(['pokemons/']);
   }
 
 
@@ -54,10 +54,12 @@ export class PokemonEditComponent implements OnInit {
     let description = '';
 
     if (this.editMode) {
-      const pokemon = this.pokemonDataService.getPokemonById(this.id);
-      name = pokemon.name;
-      imagePath = pokemon.imagePath;
-      description = pokemon.description;
+      this.pokemonDataService.getPokemonById(this.id)
+        .subscribe(response => {
+          name = response.pokemon.name;
+          imagePath = response.pokemon.imagePath;
+          description = response.pokemon.description;
+        });
     }
 
     this.pokemonForm = new FormGroup({
