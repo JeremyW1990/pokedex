@@ -10,3 +10,7 @@
   background-size: cover;
   /* height: auto; */
 }
+
+mat-card-content {
+  height: 30px;
+}

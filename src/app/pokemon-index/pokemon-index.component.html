@@ -4,6 +4,7 @@
 <div class="row">
     <div *ngFor="let pokemon of pokemons">
         <div class="col-sm-4 col-md-3">
+
             <mat-card [routerLink]="['/pokemons/' + pokemon.id]">
               <mat-card-header>
                 <div mat-card-avatar >
@@ -23,8 +24,8 @@
                 <button mat-button>SHARE</button>
               </mat-card-actions>
             </mat-card>
-          </div>
 
+          </div>
     </div>
 </div>
 
