@@ -52,7 +52,6 @@ export class PokemonDataService {
     //     value.imagePath
     //   )
     // );
-    console.log(value);
     this.http.post('http://localhost:3000/pokemons/', value)
       .subscribe(response => {
         console.log(response);
