@@ -6,12 +6,10 @@ exports.getPokemons = (req, res, next) => {
   let pokemons;
   pokemonQuery
   .then(pokemonsData=>{
-    console.log(pokemonsData);
     pokemons = pokemonsData;
     return Pokemon.countDocuments()
     })
     .then((totalPokemonsNumber) => {
-      console.log(totalPokemonsNumber);
       res.status(200).json({
         message: 'Pokemons fetched successfully!',
         pokemons: pokemons,
@@ -29,7 +27,6 @@ exports.getPokemons = (req, res, next) => {
 exports.getPokemon = (req, res, next) => {
   Pokemon.findOne({id: req.params.id })
   .then(response => {
-    console.log('Pokemon fetched by ID successfully!', response);
     res.json({
       message: 'Pokemon fetched by ID successfully!',
       pokemon: response
@@ -44,7 +41,6 @@ exports.getPokemon = (req, res, next) => {
 };
 
 exports.createPokemon = (req, res, next) => {
-  console.log('create Pokemon' , req.body);
   const pokemon = new Pokemon({
     id: req.body.id,
     name: req.body.name,
@@ -65,10 +61,31 @@ exports.createPokemon = (req, res, next) => {
   });
 }
 
+exports.updatePokemon = (req, res, next) => {
+  const pokemon = {
+    id: req.body.id,
+    name: req.body.name,
+    imagePath: req.body.imagePath,
+    description: req.body.description
+  };
+  Pokemon.findOneAndUpdate({id: req.params.id}, pokemon)
+  .then(response => {
+    res.json({
+      message: 'Pokemon updated successfully!',
+      pokemon: response
+    })
+  })
+  .catch(err => {
+    console.log('error:', err);
+    res.status(500).json({
+      message: 'Pokemon updated failed.'
+    })
+  });
+}
+
 exports.deletePokemon = (req, res, next) => {
   Pokemon.findOneAndDelete({id: req.params.id })
   .then(response => {
-    console.log('Pokemon delete by ID successfully!', response);
     res.json({
       message: 'Pokemon detele by ID successfully!'
     })

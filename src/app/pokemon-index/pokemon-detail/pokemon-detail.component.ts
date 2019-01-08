@@ -31,14 +31,11 @@ export class PokemonDetailComponent implements OnInit {
   }
 
   onEdit () {
-    this.router.navigate([this.id + '/edit']);
+    this.router.navigate(['./edit'], {relativeTo: this.route});
   }
 
   onDelete () {
     this.pokemonDataService.deletePokemonById(this.id);
-    setTimeout(() => {
-      this.router.navigate(['/pokemons']);
-    }, 1000);
   }
 
 }

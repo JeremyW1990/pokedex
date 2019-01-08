@@ -5,6 +5,7 @@ const pokemonController = require('../controllers/pokemon');
 router.get('', pokemonController.getPokemons);
 router.get('/:id', pokemonController.getPokemon);
 router.post('', pokemonController.createPokemon);
+router.put('/:id',pokemonController.updatePokemon);
 router.delete('/:id', pokemonController.deletePokemon);
 
 module.exports = router;

@@ -10,6 +10,9 @@ import { FormGroup, Validators, FormControl } from '@angular/forms';
 })
 export class PokemonEditComponent implements OnInit {
   id: number;
+  name: string;
+  imagePath: string;
+  description: string;
   editMode = false;
   pokemonForm: FormGroup;
 
@@ -40,7 +43,6 @@ export class PokemonEditComponent implements OnInit {
     } else {
       this.pokemonDataService.addNewPokemon(this.pokemonForm.value);
     }
-    this.router.navigate(['pokemons/']);
   }
 
 
@@ -49,24 +51,24 @@ export class PokemonEditComponent implements OnInit {
   }
 
   private initForm() {
-    let name = '';
-    let imagePath = '';
-    let description = '';
+
 
     if (this.editMode) {
       this.pokemonDataService.getPokemonById(this.id)
         .subscribe(response => {
-          name = response.pokemon.name;
-          imagePath = response.pokemon.imagePath;
-          description = response.pokemon.description;
+          this.pokemonForm.patchValue({
+            name: response.pokemon.name,
+            imagePath:  response.pokemon.imagePath,
+            description: response.pokemon.description
+          });
         });
     }
 
     this.pokemonForm = new FormGroup({
       'id': new FormControl(this.id, Validators.required),
-      'name': new FormControl(name, Validators.required),
-      'imagePath': new FormControl(imagePath, Validators.required),
-      'description': new FormControl(description, Validators.required),
+      'name': new FormControl(this.name, Validators.required),
+      'imagePath': new FormControl(this.imagePath, Validators.required),
+      'description': new FormControl(this.description, Validators.required),
     });
   }
 

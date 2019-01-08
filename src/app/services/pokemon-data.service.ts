@@ -61,14 +61,20 @@ export class PokemonDataService {
   }
 
   updatePokemonById(oldId: number, value: any): any {
-    for (const pokemon of this.pokemons) {
-      if (+pokemon.id === +oldId) {
-          pokemon.id = value.id;
-          pokemon.name = value.name;
-          pokemon.description = value.description;
-          pokemon.imagePath = value.imagePath;
-      }
-    }
+    // for (const pokemon of this.pokemons) {
+    //   if (+pokemon.id === +oldId) {
+    //       pokemon.id = value.id;
+    //       pokemon.name = value.name;
+    //       pokemon.description = value.description;
+    //       pokemon.imagePath = value.imagePath;
+    //   }
+    // }
+    this.http.put<{message: String, pokemon: any}>('http://localhost:3000/pokemons/' + oldId, value)
+      .subscribe(response => {
+        console.log(response);
+        this.router.navigate(['pokemons/' + value.id]);
+
+      });
   }
 
 }
