@@ -65,3 +65,19 @@ exports.createPokemon = (req, res, next) => {
   });
 }
 
+exports.deletePokemon = (req, res, next) => {
+  Pokemon.findOneAndDelete({id: req.params.id })
+  .then(response => {
+    console.log('Pokemon delete by ID successfully!', response);
+    res.json({
+      message: 'Pokemon detele by ID successfully!'
+    })
+  })
+  .catch(err => {
+    console.log(err);
+    res.status(500).json({
+      message: 'Pokemon delete by ID failed.'
+    })
+  });
+};
+

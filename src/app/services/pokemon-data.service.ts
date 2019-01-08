@@ -38,6 +38,7 @@ export class PokemonDataService {
     this.http.delete('http://localhost:3000/pokemons/' + id)
       .subscribe(response => {
         console.log(response);
+        this.router.navigate(['/pokemons']);
       });
     // const updatepokemons = this.pokemons.filter(pokemon => +pokemon.id !== +id);
     // this.pokemons = updatepokemons;

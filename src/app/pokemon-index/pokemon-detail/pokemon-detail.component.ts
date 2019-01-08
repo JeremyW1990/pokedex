@@ -36,7 +36,9 @@ export class PokemonDetailComponent implements OnInit {
 
   onDelete () {
     this.pokemonDataService.deletePokemonById(this.id);
-    this.router.navigate(['/index']);
+    setTimeout(() => {
+      this.router.navigate(['/pokemons']);
+    }, 1000);
   }
 
 }
