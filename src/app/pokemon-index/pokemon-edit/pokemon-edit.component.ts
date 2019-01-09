@@ -64,6 +64,10 @@ export class PokemonEditComponent implements OnInit {
         });
     }
 
+    this.id = 2;
+    this.name = '3';
+    this.imagePath = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png";
+    this.description = '3';
     this.pokemonForm = new FormGroup({
       'id': new FormControl(this.id, Validators.required),
       'name': new FormControl(this.name, Validators.required),

@@ -41,24 +41,34 @@ exports.getPokemon = (req, res, next) => {
 };
 
 exports.createPokemon = (req, res, next) => {
-  const pokemon = new Pokemon({
-    id: req.body.id,
-    name: req.body.name,
-    imagePath: req.body.imagePath,
-    description: req.body.description
-  });
-  pokemon.save()
-  .then(response => {
-    res.json({
-      message: 'Pokemon added successfully!'
+
+  // No duplicated pokemon ID
+  // Pokemon.findOne({id: req.body.id})
+  // .then(response =>{
+  //   res.status(500).json({
+  //     message: 'Pokemon ID exists in DB.'
+  //   })
+  // })
+  // .catch(() => {
+
+    const pokemon = new Pokemon({
+      id: req.body.id,
+      name: req.body.name,
+      imagePath: req.body.imagePath,
+      description: req.body.description
+    });
+    pokemon.save()
+    .then(response => {
+      res.json({
+        message: 'Pokemon added successfully!'
+      })
     })
-  })
-  .catch(err => {
-    console.log(err);
-    res.status(500).json({
-      message: 'Pokemon added failed.'
-    })
-  });
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({
+        message: 'Pokemon added failed.'
+      })
+    });
 }
 
 exports.updatePokemon = (req, res, next) => {
