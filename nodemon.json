@@ -1,0 +1,7 @@
+
+  {
+    "env" : {
+      "mongoDb_PW": "m",
+      "private_key": "private_key"
+    }
+  }

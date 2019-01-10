@@ -1,0 +1,31 @@
+<mat-card *ngIf="!isLoading; else spinner">
+  <form (submit)="onSignup()" [formGroup]="form">
+    <mat-form-field>
+      <input
+       matInput
+       formControlName="email"
+       placeholder="Email">
+      <mat-error *ngIf="form.controls['email'].touched && form.controls['email'].errors?.required">Email is required.</mat-error>
+      <mat-error *ngIf="form.controls['email'].touched && form.controls['email'].errors?.email">Not a valid email address.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input
+       matInput
+       formControlName="password"
+       placeholder="Password">
+      <mat-error *ngIf="form.controls['password'].touched && form.controls['password'].errors?.required">Password is required.</mat-error>
+      <mat-error *ngIf="form.controls['password'].touched && form.controls['password'].errors?.minlength">Min length is 3</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button
+      color="primary"
+      [disabled]="form.invalid"
+      type="submit">Sign Up</button>
+  </form>
+</mat-card>
+
+<ng-template #spinner >
+    <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>
+
