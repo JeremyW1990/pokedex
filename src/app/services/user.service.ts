@@ -11,7 +11,8 @@ export class UserService {
 
   authStatusListener = new Subject<boolean>();
   autoLogoutRef;
-  constructor(private http: HttpClient,
+  constructor(
+    private http: HttpClient,
     private router: Router) { }
 
 
@@ -52,6 +53,18 @@ export class UserService {
       console.log(error);
       this.authStatusListener.next(false);
     });
+  }
+
+  addFavouritePokemonById (pokemonId: string) {
+    const data = {
+      userId : this.getLocalStorageUserId(),
+      pokemonId : pokemonId
+    };
+    console.log(data);
+    // this.http.patch(environment.backend_URL + 'user/' + data.userId + '/addfavouritepk', data)
+    //   .subscribe(response => {
+    //     console.log(response);
+    //   });
   }
 
 

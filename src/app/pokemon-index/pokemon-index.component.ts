@@ -31,11 +31,12 @@ export class PokemonIndexComponent implements OnInit {
       });
   }
 
-  onFavour () {
+  onFavour (pokemonId: string ) {
     if (this.userService.checkLocalAuth()) {
-      console.log("I favoured this pokemon");
+      console.log('I favoured this pokemon');
+      this.userService.addFavouritePokemonById(pokemonId);
     } else {
-      console.log("I can't favour this pokemon");
+      console.log('I can\'t favour this pokemon');
     }
   }
 

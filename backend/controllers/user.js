@@ -36,7 +36,7 @@ exports.createUser = (req, res, next)=>{
   .catch(err =>{
     console.log(err);
   })
-}
+};
 
 exports.loginUser = (req, res, next)=>{
 
@@ -73,4 +73,10 @@ exports.loginUser = (req, res, next)=>{
       console.log(err);
     })
   })
+};
+
+exports.addFavouritePokemon = (req, res, next ) => {
+
+  Users.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}});
+
 };

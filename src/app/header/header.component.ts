@@ -17,12 +17,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isAuth = this.userService.checkLocalAuth();
     this.authSub = this.userService.getAuthStateListener()
       .subscribe(resposne => {
-        console.log('Header Auth:', resposne);
         this.isAuth = resposne;
-        console.log(this.isAuth);
       });
-      console.log(this.isAuth);
-
   }
 
   onLogout() {
