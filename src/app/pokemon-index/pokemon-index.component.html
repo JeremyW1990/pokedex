@@ -5,8 +5,8 @@
     <div *ngFor="let pokemon of pokemons">
         <div class="col-sm-4 col-md-3">
 
-            <mat-card [routerLink]="['/pokemons/' + pokemon.id]">
-              <mat-card-header>
+            <mat-card>
+              <mat-card-header [routerLink]="['/pokemons/' + pokemon.id]">
                 <div mat-card-avatar >
                   <img class="avatar" [src]="pokemon.imagePath" alt={{pokemon.name}}>
                 </div>
@@ -20,7 +20,7 @@
                 </p>
               </mat-card-content>
               <mat-card-actions>
-                <button mat-button>LIKE</button>
+                <button mat-button (click)="onFavour()">LIKE</button>
                 <button mat-button>SHARE</button>
               </mat-card-actions>
             </mat-card>

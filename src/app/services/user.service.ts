@@ -34,7 +34,7 @@ export class UserService {
 
   login (user: any) {
     console.log('User to be submitted to backend for login', user);
-    this.http.post<{message: string, token: string, expiresIn: number, userId: string}>
+    this.http.post<{message: string, token: string, expiresIn: number, userId: string, admin: boolean}>
     (environment.backend_URL + 'login', user)
     .subscribe(response => {
 
@@ -44,6 +44,7 @@ export class UserService {
       localStorage.setItem('token', response.token);
       localStorage.setItem('expiredTime', expiredTime.toISOString());
       localStorage.setItem('userId', response.userId );
+      localStorage.setItem('admin', response.admin.toString());
 
       this.authStatusListener.next(true);
       this.router.navigate(['/']);
@@ -52,6 +53,7 @@ export class UserService {
       this.authStatusListener.next(false);
     });
   }
+
 
   logout () {
     this.clearLocalStorage();
@@ -72,10 +74,15 @@ export class UserService {
     return localStorage.getItem('userId');
   }
 
+  getLocalStorageAdmin () {
+    return localStorage.getItem('admin') === 'true' ? true : false;
+  }
+
   private clearLocalStorage () {
     localStorage.removeItem('token');
     localStorage.removeItem('expiredTime');
     localStorage.removeItem('userId');
+    localStorage.removeItem('admin');
   }
 
   private setAuthTimeOut (duration: number) {

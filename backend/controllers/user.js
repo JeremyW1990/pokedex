@@ -11,7 +11,8 @@ exports.createUser = (req, res, next)=>{
 
     const user = new User({
       email: req.body.email,
-      password: hashedPassword
+      password: hashedPassword,
+      admin: false
     });
 
     user.save()
@@ -59,7 +60,8 @@ exports.loginUser = (req, res, next)=>{
           message: 'Login successfully.',
           token: token,
           expiresIn: 3600, // in second
-          userId: dbUser._id
+          userId: dbUser._id,
+          admin: dbUser.admin
         })}
       else {
         res.status(401).json({

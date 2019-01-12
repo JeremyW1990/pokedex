@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PokemonDataService } from '../services/pokemon-data.service';
 import { Pokemon } from './pokemon.module';
 import { Subscription } from 'rxjs';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-pokemon-index',
@@ -14,7 +15,11 @@ export class PokemonIndexComponent implements OnInit {
   private totalPokemonsNumber;
   private pokemonsSubscription: Subscription;
 
-  constructor(private pokemonDataService: PokemonDataService) { }
+  constructor(
+    private pokemonDataService: PokemonDataService,
+    private userService: UserService
+
+    ) { }
 
   ngOnInit() {
     this.pokemonDataService.getpokemons();
@@ -24,6 +29,14 @@ export class PokemonIndexComponent implements OnInit {
         this.totalPokemonsNumber = response.totalPokemonsNumber;
         console.log(this.pokemons);
       });
+  }
+
+  onFavour () {
+    if (this.userService.checkLocalAuth()) {
+      console.log("I favoured this pokemon");
+    } else {
+      console.log("I can't favour this pokemon");
+    }
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
