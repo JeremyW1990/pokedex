@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PokemonDataService } from 'src/app/services/pokemon-data.service';
 import { FormGroup, Validators, FormControl } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-edit',
@@ -66,14 +67,29 @@ export class PokemonEditComponent implements OnInit {
 
     this.id = 2;
     this.name = '3';
-    this.imagePath = "https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png";
+    this.imagePath = 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png';
     this.description = '3';
     this.pokemonForm = new FormGroup({
-      'id': new FormControl(this.id, Validators.required),
+      'id': new FormControl(this.id, [Validators.required], this.duplicatedPokemonId.bind(this)),
       'name': new FormControl(this.name, Validators.required),
       'imagePath': new FormControl(this.imagePath, Validators.required),
       'description': new FormControl(this.description, Validators.required),
     });
   }
 
+  duplicatedPokemonId(control: FormControl): Promise<any> | Observable<any> {
+
+    const promise = new Promise<any>((resolve, reject) => {
+      const obs = this.pokemonDataService.getPokemonById(control.value)
+        .subscribe(response => {
+          if (response.pokemon) {
+            resolve({'DuplicatedPokemonID': true});
+          } else {
+            resolve(null);
+          }
+        });
+      });
+
+    return promise;
+  }
 }

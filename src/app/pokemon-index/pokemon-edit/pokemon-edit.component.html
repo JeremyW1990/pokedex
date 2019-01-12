@@ -22,6 +22,8 @@
                 id="id"
                 formControlName="id"
                 class="form-control">
+              <mat-error *ngIf="pokemonForm.controls['id'].touched && pokemonForm.controls['id'].errors?.DuplicatedPokemonID">Duplicated Pokemon ID</mat-error>
+
             </div>
           </div>
         </div>

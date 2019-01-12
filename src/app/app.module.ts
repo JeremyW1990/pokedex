@@ -1,9 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule} from '@angular/common/http';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -15,6 +13,8 @@ import { PokemonEditComponent } from './pokemon-index/pokemon-edit/pokemon-edit.
 import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserModule } from './user/user.module';
+import { AngularMaterialModule } from './angular-material/angular-material.module';
+
 
 @NgModule({
   declarations: [
@@ -29,13 +29,12 @@ import { UserModule } from './user/user.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MatCardModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
     BrowserAnimationsModule,
-    UserModule
+    UserModule,
+    AngularMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

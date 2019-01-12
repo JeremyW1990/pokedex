@@ -27,10 +27,10 @@ exports.getPokemons = (req, res, next) => {
 exports.getPokemon = (req, res, next) => {
   Pokemon.findOne({id: req.params.id })
   .then(response => {
-    res.json({
-      message: 'Pokemon fetched by ID successfully!',
-      pokemon: response
-    })
+      res.json({
+        message: 'Pokemon fetched by ID successfully!',
+        pokemon: response
+      })
   })
   .catch(err => {
     console.log(err);
