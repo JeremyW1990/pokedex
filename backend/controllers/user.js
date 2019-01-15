@@ -76,7 +76,13 @@ exports.loginUser = (req, res, next)=>{
 };
 
 exports.addFavouritePokemon = (req, res, next ) => {
+  console.log("add favourite pokemon initiate");
+  console.log(req.body.userId);
+  console.log(req.body.pokemonId);
 
-  Users.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}});
+  User.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}})
+    .then(response => {
+      console.log(response);
+    })
 
 };

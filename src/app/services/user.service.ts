@@ -22,7 +22,7 @@ export class UserService {
 
   signup (user: any) {
     console.log('User to be submitted to backend for signup', user);
-    this.http.post(environment.backend_URL + 'signup', user)
+    this.http.post(environment.backend_URL + 'user/signup', user)
     .subscribe(response => {
       console.log(response);
       this.authStatusListener.next(true);
@@ -36,7 +36,7 @@ export class UserService {
   login (user: any) {
     console.log('User to be submitted to backend for login', user);
     this.http.post<{message: string, token: string, expiresIn: number, userId: string, admin: boolean}>
-    (environment.backend_URL + 'login', user)
+    (environment.backend_URL + 'user/login', user)
     .subscribe(response => {
 
       const expiredTime = new Date(new Date().getTime() + response.expiresIn * 1000);
@@ -61,10 +61,10 @@ export class UserService {
       pokemonId : pokemonId
     };
     console.log(data);
-    // this.http.patch(environment.backend_URL + 'user/' + data.userId + '/addfavouritepk', data)
-    //   .subscribe(response => {
-    //     console.log(response);
-    //   });
+    this.http.patch(environment.backend_URL + 'user/addfavouritepk', data)
+      .subscribe(response => {
+        console.log(response);
+      });
   }
 
 

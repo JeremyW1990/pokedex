@@ -4,6 +4,6 @@ const UserController = require('../controllers/user');
 
 router.post('/signup', UserController.createUser);
 router.post('/login', UserController.loginUser);
-router.put('/:id/ddFavouritePokemon', UserController.addFavouritePokemon);
+router.patch('/addfavouritepk', UserController.addFavouritePokemon);
 
 module.exports = router;
