@@ -61,7 +61,8 @@ exports.loginUser = (req, res, next)=>{
           token: token,
           expiresIn: 3600, // in second
           userId: dbUser._id,
-          admin: dbUser.admin
+          admin: dbUser.admin,
+          favouritePkList: dbUser.favouritePkList
         })}
       else {
         res.status(401).json({
@@ -83,6 +84,10 @@ exports.addFavouritePokemon = (req, res, next ) => {
   User.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}})
     .then(response => {
       console.log(response);
+      res.status(200).json({
+        message: 'Favour a Pokemon Successfully',
+        favouritePkList: response.favouritePkList
+      })
     })
 
 };

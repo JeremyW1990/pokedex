@@ -20,8 +20,15 @@
                 </p>
               </mat-card-content>
               <mat-card-actions>
-                <button mat-button (click)="onFavour(pokemon._id)">LIKE</button>
-                <button mat-button>SHARE</button>
+                <button mat-button (click)="onFavour(pokemon._id)">
+                  <mat-icon *ngIf="favouritePkList.indexOf(pokemon._id) > -1; else canFavourite ">favorite</mat-icon>
+                </button>
+                <ng-template #canFavourite>
+                    <button mat-button>
+                      <mat-icon  class="material-icons">favorite_border</mat-icon>
+                    </button>
+                </ng-template>
+
               </mat-card-actions>
             </mat-card>
 

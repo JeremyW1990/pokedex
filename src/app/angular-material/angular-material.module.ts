@@ -9,7 +9,9 @@ import {
   MatProgressSpinnerModule,
   MatPaginatorModule,
   MatDialogModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatIconModule
+
 } from '@angular/material';
 
 
@@ -24,7 +26,8 @@ import {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatIconModule
   ],
   exports: [
     MatInputModule,
@@ -35,7 +38,8 @@ import {
     MatProgressSpinnerModule,
     MatPaginatorModule,
     MatDialogModule,
-    MatFormFieldModule
+    MatFormFieldModule,
+    MatIconModule
   ],
   declarations: []
 })

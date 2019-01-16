@@ -10,6 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class UserService {
 
   authStatusListener = new Subject<boolean>();
+  currentUserFavouritePksListener = new Subject<Array<String>>();
   autoLogoutRef;
   constructor(
     private http: HttpClient,
@@ -20,13 +21,17 @@ export class UserService {
     return this.authStatusListener.asObservable();
   }
 
+  getCurrentUserFavouritePksListener () {
+    return this.currentUserFavouritePksListener.asObservable();
+  }
+
   signup (user: any) {
     console.log('User to be submitted to backend for signup', user);
     this.http.post(environment.backend_URL + 'user/signup', user)
     .subscribe(response => {
       console.log(response);
       this.authStatusListener.next(true);
-      this.router.navigate(['/']);
+      this.router.navigate(['/pokemons']);
     }, (error) => {
       this.authStatusListener.next(false);
       console.log(error);
@@ -35,10 +40,19 @@ export class UserService {
 
   login (user: any) {
     console.log('User to be submitted to backend for login', user);
-    this.http.post<{message: string, token: string, expiresIn: number, userId: string, admin: boolean}>
+    this.http.post<
+      {
+        message: string,
+        token: string,
+        expiresIn: number,
+        userId: string,
+        admin: boolean,
+        favouritePkList: Array<String>
+      }>
     (environment.backend_URL + 'user/login', user)
     .subscribe(response => {
 
+      console.log(response);
       const expiredTime = new Date(new Date().getTime() + response.expiresIn * 1000);
       console.log('expiredTime = ', expiredTime);
       this.setAuthTimeOut(response.expiresIn);
@@ -47,8 +61,9 @@ export class UserService {
       localStorage.setItem('userId', response.userId );
       localStorage.setItem('admin', response.admin.toString());
 
+      this.currentUserFavouritePksListener.next(response.favouritePkList);
       this.authStatusListener.next(true);
-      this.router.navigate(['/']);
+      this.router.navigate(['/pokemons']);
     }, (error) => {
       console.log(error);
       this.authStatusListener.next(false);
@@ -61,9 +76,13 @@ export class UserService {
       pokemonId : pokemonId
     };
     console.log(data);
-    this.http.patch(environment.backend_URL + 'user/addfavouritepk', data)
+    this.http.patch<
+    {
+      message: string,
+      favouritePkList: Array<String>
+    }>(environment.backend_URL + 'user/addfavouritepk', data)
       .subscribe(response => {
-        console.log(response);
+        this.currentUserFavouritePksListener.next(response.favouritePkList);
       });
   }
 
@@ -91,6 +110,7 @@ export class UserService {
     return localStorage.getItem('admin') === 'true' ? true : false;
   }
 
+
   private clearLocalStorage () {
     localStorage.removeItem('token');
     localStorage.removeItem('expiredTime');
@@ -102,7 +122,7 @@ export class UserService {
     this.autoLogoutRef = setTimeout(() => {
       this.clearLocalStorage();
       this.authStatusListener.next(false);
-      this.router.navigate(['/']);
+      this.router.navigate(['/pokemons']);
     }, duration * 1000);
   }
 

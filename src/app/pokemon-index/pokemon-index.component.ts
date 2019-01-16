@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PokemonDataService } from '../services/pokemon-data.service';
 import { Pokemon } from './pokemon.module';
 import { Subscription } from 'rxjs';
@@ -9,11 +9,13 @@ import { UserService } from '../services/user.service';
   templateUrl: './pokemon-index.component.html',
   styleUrls: ['./pokemon-index.component.css']
 })
-export class PokemonIndexComponent implements OnInit {
+export class PokemonIndexComponent implements OnInit, OnDestroy {
 
-  private pokemons;
-  private totalPokemonsNumber;
+  pokemons;
+  totalPokemonsNumber;
+  favouritePkList = [];
   private pokemonsSubscription: Subscription;
+  private favouritePkListSubcription: Subscription;
 
   constructor(
     private pokemonDataService: PokemonDataService,
@@ -29,6 +31,11 @@ export class PokemonIndexComponent implements OnInit {
         this.totalPokemonsNumber = response.totalPokemonsNumber;
         console.log(this.pokemons);
       });
+    this.favouritePkListSubcription = this.userService.getCurrentUserFavouritePksListener()
+      .subscribe(response => {
+        console.log(response);
+        this.favouritePkList = response;
+      });
   }
 
   onFavour (pokemonId: string ) {
@@ -40,7 +47,6 @@ export class PokemonIndexComponent implements OnInit {
     }
   }
 
-  // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy () {
     this.pokemonsSubscription.unsubscribe();
   }
