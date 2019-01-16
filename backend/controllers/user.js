@@ -76,6 +76,19 @@ exports.loginUser = (req, res, next)=>{
   })
 };
 
+exports.getfavouritepk = (req, res, next) => {
+  console.log("get user favourite pokemon list initiate");
+  console.log(req.body.userId);
+  User.findOne({_id: req.body.userId})
+    .then(response => {
+      console.log(response);
+      res.status(200).json({
+        message: 'Get User Favourite Pokemon List Successfully',
+        favouritePkList: response.favouritePkList
+      })
+    })
+};
+
 exports.addFavouritePokemon = (req, res, next ) => {
   console.log("add favourite pokemon initiate");
   console.log(req.body.userId);

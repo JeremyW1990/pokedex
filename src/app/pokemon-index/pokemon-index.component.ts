@@ -31,10 +31,12 @@ export class PokemonIndexComponent implements OnInit, OnDestroy {
         this.totalPokemonsNumber = response.totalPokemonsNumber;
         console.log(this.pokemons);
       });
+    this.userService.getCurrentUserFavouritePksByUserId(localStorage.getItem('userId'));
     this.favouritePkListSubcription = this.userService.getCurrentUserFavouritePksListener()
       .subscribe(response => {
         console.log(response);
         this.favouritePkList = response;
+        console.log(this.favouritePkList);
       });
   }
 

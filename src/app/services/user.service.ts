@@ -70,6 +70,18 @@ export class UserService {
     });
   }
 
+  getCurrentUserFavouritePksByUserId (userId: string) {
+    console.log('getCurrentUserFavouritePksByUserId - ', {userId} );
+    this.http.post<
+    {
+      message: string,
+      favouritePkList: Array<String>
+    }>(environment.backend_URL + 'user/getfavouritepklist', {userId})
+      .subscribe(response => {
+        console.log("getCurrentUserFavouritePksByUserId response - ", response);
+        this.currentUserFavouritePksListener.next(response.favouritePkList);
+      });
+  }
   addFavouritePokemonById (pokemonId: string) {
     const data = {
       userId : this.getLocalStorageUserId(),
@@ -91,6 +103,7 @@ export class UserService {
     this.clearLocalStorage();
     this.authStatusListener.next(false);
     clearTimeout(this.autoLogoutRef);
+    this.currentUserFavouritePksListener.next([]);
     this.router.navigate(['/']);
   }
 
@@ -136,6 +149,7 @@ export class UserService {
         return true;
     } else {
       this.authStatusListener.next(false);
+      this.currentUserFavouritePksListener.next([]);
       this.clearLocalStorage();
       clearTimeout(this.autoLogoutRef);
       return false;
