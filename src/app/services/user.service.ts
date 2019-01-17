@@ -94,10 +94,27 @@ export class UserService {
       favouritePkList: Array<String>
     }>(environment.backend_URL + 'user/addfavouritepk', data)
       .subscribe(response => {
+        console.log(response);
         this.currentUserFavouritePksListener.next(response.favouritePkList);
       });
   }
 
+  removeFavouritePokemonById(pokemonId: string) {
+    const data = {
+      userId : this.getLocalStorageUserId(),
+      pokemonId : pokemonId
+    };
+    console.log(data);
+    this.http.patch<
+    {
+      message: string,
+      favouritePkList: Array<String>
+    }>(environment.backend_URL + 'user/removefavouritepk', data)
+      .subscribe(response => {
+        console.log(response);
+        this.currentUserFavouritePksListener.next(response.favouritePkList);
+      });
+  }
 
   logout () {
     this.clearLocalStorage();

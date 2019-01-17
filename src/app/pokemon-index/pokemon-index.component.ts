@@ -49,6 +49,10 @@ export class PokemonIndexComponent implements OnInit, OnDestroy {
     }
   }
 
+  onUnfavour (pokemonId: string ) {
+    this.userService.removeFavouritePokemonById(pokemonId);
+  }
+
   ngOnDestroy () {
     this.pokemonsSubscription.unsubscribe();
   }

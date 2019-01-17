@@ -94,7 +94,7 @@ exports.addFavouritePokemon = (req, res, next ) => {
   console.log(req.body.userId);
   console.log(req.body.pokemonId);
 
-  User.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}})
+  User.findOneAndUpdate({_id: req.body.userId}, {$push: {favouritePkList: req.body.pokemonId}}, {'new': true})
     .then(response => {
       console.log(response);
       res.status(200).json({
@@ -102,5 +102,19 @@ exports.addFavouritePokemon = (req, res, next ) => {
         favouritePkList: response.favouritePkList
       })
     })
+};
 
+exports.removeFavouritePokemon = (req, res, next ) => {
+  console.log("remove favourite pokemon initiate");
+  console.log(req.body.userId);
+  console.log(req.body.pokemonId);
+
+  User.findOneAndUpdate({_id: req.body.userId}, {$pull: {favouritePkList: req.body.pokemonId}}, {new: true})
+    .then(response => {
+      console.log(response);
+      res.status(200).json({
+        message: 'Unavour a Pokemon Successfully',
+        favouritePkList: response.favouritePkList
+      })
+    })
 };
