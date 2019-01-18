@@ -14,6 +14,7 @@ import { HomeComponent } from './home/home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserModule } from './user/user.module';
 import { AngularMaterialModule } from './angular-material/angular-material.module';
+import { ClickOutsideDirective } from './shared/click-outside.directive';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { AngularMaterialModule } from './angular-material/angular-material.modul
     PokemonIndexComponent,
     PokemonDetailComponent,
     PokemonEditComponent,
-    HomeComponent
+    HomeComponent,
+    ClickOutsideDirective
   ],
   imports: [
     BrowserModule,

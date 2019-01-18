@@ -50,7 +50,7 @@ exports.createPokemon = (req, res, next) => {
   //   })
   // })
   // .catch(() => {
-
+    console.log("Create a new Pokemon Initiate");
     const pokemon = new Pokemon({
       id: req.body.id,
       name: req.body.name,

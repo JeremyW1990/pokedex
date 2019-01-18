@@ -11,6 +11,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuth: boolean;
   authSub: Subscription;
+  dropdownClass = '';
   constructor(private userService: UserService) { }
 
   ngOnInit() {
@@ -29,4 +30,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authSub.unsubscribe();
   }
 
+  onDropdownClick () {
+    this.dropdownClass = this.dropdownClass === '' ? 'show' : '';
+  }
+
+  outsideClicked () {
+    this.dropdownClass = '';
+  }
 }

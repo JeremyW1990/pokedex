@@ -5,8 +5,7 @@ const pokemonSchema = mongoose.Schema({
   id: {type: String, require: true, unique: true},
   name:   {type: String, require: true},
   description: {type: String, require: true},
-  imagePath: {type: String, require: true},
-  creator: {type: mongoose.Schema.Types.ObjectId, ref: "User", required: true }
+  imagePath: {type: String, require: true}
 })
 
 

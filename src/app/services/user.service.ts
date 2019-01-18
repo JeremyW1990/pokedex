@@ -78,7 +78,7 @@ export class UserService {
       favouritePkList: Array<String>
     }>(environment.backend_URL + 'user/getfavouritepklist', {userId})
       .subscribe(response => {
-        console.log("getCurrentUserFavouritePksByUserId response - ", response);
+        console.log('getCurrentUserFavouritePksByUserId response - ', response);
         this.currentUserFavouritePksListener.next(response.favouritePkList);
       });
   }

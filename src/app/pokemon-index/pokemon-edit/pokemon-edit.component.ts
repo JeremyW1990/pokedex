@@ -65,10 +65,11 @@ export class PokemonEditComponent implements OnInit {
         });
     }
 
-    this.id = 2;
-    this.name = '3';
-    this.imagePath = 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/003.png';
-    this.description = '3';
+    this.id = 4;
+    this.name = '4';
+    this.imagePath = 'https://assets.pokemon.com/assets/cms2/img/pokedex/full/004.png';
+    // tslint:disable-next-line:max-line-length
+    this.description = 'The flame that burns at the tip of its tail is an indication of its emotions. The flame wavers when Charmander is enjoying itself. If the Pokémon becomes enraged, the flame burns fiercely.';
     this.pokemonForm = new FormGroup({
       'id': new FormControl(this.id, [Validators.required], this.duplicatedPokemonId.bind(this)),
       'name': new FormControl(this.name, Validators.required),
