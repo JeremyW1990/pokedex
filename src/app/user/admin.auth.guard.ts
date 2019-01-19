@@ -11,7 +11,7 @@ export class AdminAuthGuard implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): boolean | Observable<boolean> | Promise<boolean> {
-    const isAuth = this.userService.getLocalStorageAdmin();
+    const isAuth = this.userService.getLocalStorageisAdmin();
     if (!isAuth) {
       this.router.navigate(['/login']);
     }

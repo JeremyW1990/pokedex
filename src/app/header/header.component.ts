@@ -10,16 +10,23 @@ import { Subscription } from 'rxjs';
 export class HeaderComponent implements OnInit, OnDestroy {
 
   isAuth: boolean;
+  isAdmin: boolean;
+  email: string;
   authSub: Subscription;
   dropdownClass = '';
   constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.isAuth = this.userService.checkLocalAuth();
+    this.isAdmin = this.userService.getLocalStorageisAdmin();
+    this.email = this.userService.getLocalStorageEmail();
     this.authSub = this.userService.getAuthStateListener()
       .subscribe(resposne => {
-        this.isAuth = resposne;
+        this.isAuth = resposne.isLogin;
+        this.isAdmin = resposne.isAdmin;
+        this.email = this.userService.getLocalStorageEmail();
       });
+
   }
 
   onLogout() {

@@ -61,7 +61,7 @@ exports.loginUser = (req, res, next)=>{
           token: token,
           expiresIn: 3600, // in second
           userId: dbUser._id,
-          admin: dbUser.admin,
+          isAdmin: dbUser.admin,
           favouritePkList: dbUser.favouritePkList
         })}
       else {

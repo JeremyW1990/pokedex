@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class UserService {
 
-  authStatusListener = new Subject<boolean>();
+  authStatusListener = new Subject<{isLogin: boolean, isAdmin: boolean}>();
   currentUserFavouritePksListener = new Subject<Array<String>>();
   autoLogoutRef;
   constructor(
@@ -30,10 +30,10 @@ export class UserService {
     this.http.post(environment.backend_URL + 'user/signup', user)
     .subscribe(response => {
       console.log(response);
-      this.authStatusListener.next(true);
+      this.authStatusListener.next({isLogin: true, isAdmin: false});
       this.router.navigate(['/pokemons']);
     }, (error) => {
-      this.authStatusListener.next(false);
+      this.authStatusListener.next({isLogin: false, isAdmin: false});
       console.log(error);
     });
   }
@@ -46,7 +46,7 @@ export class UserService {
         token: string,
         expiresIn: number,
         userId: string,
-        admin: boolean,
+        isAdmin: boolean,
         favouritePkList: Array<String>
       }>
     (environment.backend_URL + 'user/login', user)
@@ -56,17 +56,18 @@ export class UserService {
       const expiredTime = new Date(new Date().getTime() + response.expiresIn * 1000);
       console.log('expiredTime = ', expiredTime);
       this.setAuthTimeOut(response.expiresIn);
+      localStorage.setItem('email', user.email);
       localStorage.setItem('token', response.token);
       localStorage.setItem('expiredTime', expiredTime.toISOString());
       localStorage.setItem('userId', response.userId );
-      localStorage.setItem('admin', response.admin.toString());
+      localStorage.setItem('isAdmin', response.isAdmin.toString());
 
       this.currentUserFavouritePksListener.next(response.favouritePkList);
-      this.authStatusListener.next(true);
+      this.authStatusListener.next({isLogin: true, isAdmin: response.isAdmin});
       this.router.navigate(['/pokemons']);
     }, (error) => {
       console.log(error);
-      this.authStatusListener.next(false);
+      this.authStatusListener.next({isLogin: false, isAdmin: false});
     });
   }
 
@@ -118,10 +119,14 @@ export class UserService {
 
   logout () {
     this.clearLocalStorage();
-    this.authStatusListener.next(false);
+    this.authStatusListener.next({isLogin: false, isAdmin: false});
     clearTimeout(this.autoLogoutRef);
     this.currentUserFavouritePksListener.next([]);
-    this.router.navigate(['/']);
+    this.router.navigate(['/pokemons']);
+  }
+
+  getLocalStorageEmail () {
+    return localStorage.getItem('email');
   }
 
   getLocalStorageToken () {
@@ -136,22 +141,23 @@ export class UserService {
     return localStorage.getItem('userId');
   }
 
-  getLocalStorageAdmin () {
-    return localStorage.getItem('admin') === 'true' ? true : false;
+  getLocalStorageisAdmin () {
+    return localStorage.getItem('isAdmin') === 'true' ? true : false;
   }
 
 
   private clearLocalStorage () {
+    localStorage.removeItem('email');
     localStorage.removeItem('token');
     localStorage.removeItem('expiredTime');
     localStorage.removeItem('userId');
-    localStorage.removeItem('admin');
+    localStorage.removeItem('isAdmin');
   }
 
   private setAuthTimeOut (duration: number) {
     this.autoLogoutRef = setTimeout(() => {
       this.clearLocalStorage();
-      this.authStatusListener.next(false);
+      this.authStatusListener.next({isLogin: true, isAdmin: false});
       this.router.navigate(['/pokemons']);
     }, duration * 1000);
   }
@@ -162,10 +168,10 @@ export class UserService {
     if (this.getLocalStorageToken() &&
       updatedTimeDuration > 0) {
       this.setAuthTimeOut(updatedTimeDuration / 1000);
-        this.authStatusListener.next(true);
+        this.authStatusListener.next({isLogin: true, isAdmin: this.getLocalStorageisAdmin()});
         return true;
     } else {
-      this.authStatusListener.next(false);
+      this.authStatusListener.next({isLogin: false, isAdmin: false});
       this.currentUserFavouritePksListener.next([]);
       this.clearLocalStorage();
       clearTimeout(this.autoLogoutRef);
